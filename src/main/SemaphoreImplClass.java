@@ -7,7 +7,6 @@ import interfaces.SemaphoreInterface;
 
 public class SemaphoreImplClass implements SemaphoreInterface {
 
-	private static List<Thread>	blockedThread;
 	private Integer				permits;
 	private Integer 			threadWaiting;
 
@@ -16,7 +15,6 @@ public class SemaphoreImplClass implements SemaphoreInterface {
 	}
 
 	public SemaphoreImplClass(Integer permits) {
-		blockedThread = new ArrayList<Thread>();
 		this.permits = permits;
 		this.threadWaiting = 0;
 	}
@@ -35,11 +33,12 @@ public class SemaphoreImplClass implements SemaphoreInterface {
 				try {
 					threadWaiting++;
 					wait();
+					threadWaiting--;
 				}
-				catch (InterruptedException e) {
+				catch (Exception e) {
 					e.printStackTrace();
+					System.out.println("Blocage du thread impossible");
 				}
-				threadWaiting--;
 			}
 			// ok
 			permits--;
@@ -47,10 +46,10 @@ public class SemaphoreImplClass implements SemaphoreInterface {
 
 
 	@Override
-	public synchronized int releaseAll() {
-		notifyAll();
+	public int releaseAll() {
 		int tmpWaiting = threadWaiting;
-		threadWaiting = 0;
+		while(threadWaiting != 0)
+			up();
 		return tmpWaiting;
 	}
 
