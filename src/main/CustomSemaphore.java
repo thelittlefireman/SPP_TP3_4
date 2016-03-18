@@ -1,19 +1,50 @@
 package main;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 import interfaces.SemaphoreInterface;
 
 public class CustomSemaphore implements SemaphoreInterface {
 
+	private static List<Thread>	blockedThread;
+	private final Lock			lock	= new ReentrantLock();
+	private Integer				permits;
+	private Integer				actualThread;
+
+	public CustomSemaphore() {
+		this(0);
+	}
+
+	public CustomSemaphore(int permits) {
+		blockedThread = new ArrayList<>();
+		permits = permits;
+		actualThread = 0;
+	}
+
 	@Override
 	public void up() {
-		// TODO Auto-generated method stub
+		synchronized (permits) {
+
+		}
 
 	}
 
 	@Override
 	public void down() {
-		// TODO Auto-generated method stub
+		synchronized (permits) {
+			synchronized (actualThread) {
+				if (actualThread + 1 <= permits) {
+					// ok
+				}
+				else {
+					blockedThread.add(this);
+				}
 
+			}
+		}
 	}
 
 	@Override
