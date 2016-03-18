@@ -2,21 +2,19 @@ package main;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 import interfaces.SemaphoreInterface;
 
-public class CustomSemaphore implements SemaphoreInterface {
+public class SemaphoreImplClass implements SemaphoreInterface {
 
 	private static List<Thread>	blockedThread;
 	private Integer				permits;
 
-	public CustomSemaphore() {
+	public SemaphoreImplClass() {
 		this(0);
 	}
 
-	public CustomSemaphore(Integer permits) {
+	public SemaphoreImplClass(Integer permits) {
 		blockedThread = new ArrayList<>();
 		this.permits = permits;
 	}
@@ -37,7 +35,7 @@ public class CustomSemaphore implements SemaphoreInterface {
 				permits--;
 			}
 			else {
-				// bloqué
+				// bloquï¿½
 				try {
 					wait();
 				}
