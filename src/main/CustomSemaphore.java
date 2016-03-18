@@ -10,7 +10,6 @@ import interfaces.SemaphoreInterface;
 public class CustomSemaphore implements SemaphoreInterface {
 
 	private static List<Thread>	blockedThread;
-	private final Lock			lock	= new ReentrantLock();
 	private Integer				permits;
 
 	public CustomSemaphore() {
@@ -28,7 +27,6 @@ public class CustomSemaphore implements SemaphoreInterface {
 			permits++;
 			notify();
 		}
-
 	}
 
 	@Override
