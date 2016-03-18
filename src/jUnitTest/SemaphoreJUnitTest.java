@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.Collection;
 import java.util.Vector;
 
+import main.SemaphoreImplClass;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,7 +19,7 @@ public class SemaphoreJUnitTest {
 
 	@Before
 	public void obtainSemaphoreImplementation() throws ClassNotFoundException {
-		mySemImpl = Class.forName(System.getProperty("SemaphoreImplClass"));
+		mySemImpl = SemaphoreImplClass.class;
 	}
 
 	private SemaphoreInterface createSemaphore()

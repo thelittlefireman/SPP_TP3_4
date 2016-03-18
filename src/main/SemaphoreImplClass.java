@@ -49,6 +49,7 @@ public class SemaphoreImplClass implements SemaphoreInterface {
 
 	@Override
 	public int releaseAll() {
+		notifyAll();
 		// TODO Auto-generated method stub
 		return 0;
 	}
