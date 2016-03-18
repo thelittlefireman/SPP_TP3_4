@@ -25,7 +25,7 @@ public class SemaphoreImplClass implements SemaphoreInterface {
 	public void up() {
 		synchronized (permits) {
 			permits++;
-			permits.notify();
+			notify();
 		}
 	}
 
@@ -36,27 +36,22 @@ public class SemaphoreImplClass implements SemaphoreInterface {
 			{
 				// bloqué
 				try {
-					permits.wait();
 					threadWaiting++;
+					wait();
 				}
 				catch (InterruptedException e) {
 					e.printStackTrace();
 				}
+				threadWaiting--;
 			}
-			if (permits != 0) {
-				// ok
-				permits--;
-			}
-			else {
-
-			}
-
+			// ok
+			permits--;
 		}
 	}
 
 	@Override
 	public int releaseAll() {
-		permits.notifyAll();
+		notifyAll();
 		int tmpWaiting = threadWaiting;
 		threadWaiting = 0;
 		return tmpWaiting;
