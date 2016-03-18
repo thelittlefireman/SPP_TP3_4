@@ -22,16 +22,13 @@ public class SemaphoreImplClass implements SemaphoreInterface {
 	}
 
 	@Override
-	public void up() {
-		synchronized (permits) {
+	public synchronized void up() {
 			permits++;
 			notify();
 		}
-	}
 
 	@Override
-	public void down() {
-		synchronized (permits) {
+	public synchronized void down() {
 			while(permits == 0)
 			{
 				// bloqué
@@ -47,10 +44,10 @@ public class SemaphoreImplClass implements SemaphoreInterface {
 			// ok
 			permits--;
 		}
-	}
+
 
 	@Override
-	public int releaseAll() {
+	public synchronized int releaseAll() {
 		notifyAll();
 		int tmpWaiting = threadWaiting;
 		threadWaiting = 0;
