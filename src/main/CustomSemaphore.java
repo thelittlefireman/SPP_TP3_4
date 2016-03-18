@@ -18,16 +18,17 @@ public class CustomSemaphore implements SemaphoreInterface {
 		this(0);
 	}
 
-	public CustomSemaphore(int permits) {
+	public CustomSemaphore(Integer permits) {
 		blockedThread = new ArrayList<>();
-		permits = permits;
+		this.permits = permits;
 		actualThread = 0;
 	}
 
 	@Override
 	public void up() {
 		synchronized (permits) {
-
+			permits++;
+			notify();
 		}
 
 	}
