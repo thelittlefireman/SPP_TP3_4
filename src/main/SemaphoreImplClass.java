@@ -9,39 +9,46 @@ public class SemaphoreImplClass implements SemaphoreInterface {
 
 	private static List<Thread>	blockedThread;
 	private Integer				permits;
+	private Integer 			threadWaiting;
 
 	public SemaphoreImplClass() {
 		this(0);
 	}
 
 	public SemaphoreImplClass(Integer permits) {
-		blockedThread = new ArrayList<>();
+		blockedThread = new ArrayList<Thread>();
 		this.permits = permits;
+		this.threadWaiting = 0;
 	}
 
 	@Override
 	public void up() {
 		synchronized (permits) {
 			permits++;
-			notify();
+			permits.notify();
 		}
 	}
 
 	@Override
 	public void down() {
 		synchronized (permits) {
+			while(permits == 0)
+			{
+				// bloqué
+				try {
+					permits.wait();
+					threadWaiting++;
+				}
+				catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
 			if (permits != 0) {
 				// ok
 				permits--;
 			}
 			else {
-				// bloqu�
-				try {
-					wait();
-				}
-				catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+
 			}
 
 		}
@@ -49,9 +56,10 @@ public class SemaphoreImplClass implements SemaphoreInterface {
 
 	@Override
 	public int releaseAll() {
-		notifyAll();
-		// TODO Auto-generated method stub
-		return 0;
+		permits.notifyAll();
+		int tmpWaiting = threadWaiting;
+		threadWaiting = 0;
+		return tmpWaiting;
 	}
 
 }
