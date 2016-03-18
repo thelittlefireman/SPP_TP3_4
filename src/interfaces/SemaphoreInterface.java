@@ -1,3 +1,5 @@
+package interfaces;
+
 public interface SemaphoreInterface {
   public void up();
   public void down();
