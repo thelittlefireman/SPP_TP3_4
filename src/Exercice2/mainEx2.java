@@ -7,11 +7,14 @@ import java.util.concurrent.Exchanger;
  */
 public class mainEx2 {
    static Exchanger<String> exchanger;
-static String mainString="pong";
     public static void main(String[] args) {
+        //On initialise nos variables
+        //Alice commence pas ping
+        //Bob par pong
         exchanger = new Exchanger<String>();
         Thread t1 = new Thread(new Alice(exchanger,"ping"));
         Thread t2 = new Thread(new Bob(exchanger,"pong"));
+        //On Execute les deux threads
         t1.start();
         t2.start();
     }
