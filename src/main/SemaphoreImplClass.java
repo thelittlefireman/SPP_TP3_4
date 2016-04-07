@@ -1,8 +1,5 @@
 package main;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import interfaces.SemaphoreInterface;
 
 /**
@@ -25,14 +22,13 @@ public class SemaphoreImplClass implements SemaphoreInterface {
      * Constructeur du sémaphore :
      * @param permits : nombre de thread autorisé en même temps
      */
-    public SemaphoreImplClass(Integer permits) {
+    public SemaphoreImplClass(int permits) {
         this.permits = permits;
     }
 
     /**
      * Libérer un jeton du Sémaphore
      */
-    @Override
     public synchronized void up() {
         //On libère un jeton : on libère une place
         permits++;
@@ -45,7 +41,7 @@ public class SemaphoreImplClass implements SemaphoreInterface {
     /**
      * Prendre un jeton du sémaphore
      */
-    @Override
+
     public synchronized void down() {
         //On prends un jeton : on prends une place
         permits--;
@@ -65,8 +61,6 @@ public class SemaphoreImplClass implements SemaphoreInterface {
         }
     }
 
-
-    @Override
     public synchronized int releaseAll() {
         //Compteur du nombre de thread réveillé
         int tmpNotify = 0;
